@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Course</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url("vignan.jpg") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+    }
+
+
+    .hdr { background-color: #333333;
+         color: white; 
+         padding: 10px 20px; 
+         overflow: auto; 
+        }
+        .logo { 
+            float: left; 
+            font-size: 18px; 
+            font-weight: bold; }
+    .info { float: right; }
+    .hdr a { 
+        color: white; 
+        text-decoration: none; 
+        margin-left: 15px; }
+
+    .box {
+      width: 90%;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      color: #000;
+    }
+
+    h1, h2 { color: #333333; }
+    h2 { border-bottom: 1px solid #eee; 
+        padding-bottom: 5px; 
+        margin-top: 30px; }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    textarea { height: 80px; }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .btn-save { background-color: #007bff; }
+    .btn-add { background-color: #2E8B57; }
+    .btn-del { background-color: #dc3545; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th { background-color: #f2f2f2; }
+  </style>
+</head>
+<body>
+  <div class="hdr">
+    <div class="logo">QR Attendance</div>
+    <div class="info"><span>Welcome, Teacher Name</span><a href="teacher-login.html">Logout</a></div>
+  </div>
+
+  <div class="box">
+    <h1>Manage Course: CS101</h1>
+
+    <h2>Course Details</h2>
+    <form>
+      <label for="title">Course Title:</label>
+      <input type="text" id="title" value="CS101: Introduction to Programming">
+      <label for="desc">Description:</label>
+      <textarea id="desc">An introductory course on the fundamentals of programming...</textarea>
+      <button class="btn-save">Save Changes</button>
+    </form>
+
+    <h2>Enrolled Students</h2>
+    <form>
+      <label for="studentId">Add Student by User ID:</label>
+      <input type="text" id="studentId" placeholder="e.g., S12345">
+      <button class="btn-add">Add Student</button>
+    </form>
+
+    <table>
+      <tr><th>Name</th><th>User ID</th><th>Action</th></tr>
+      <tr><td>Alice Johnson</td><td>S12345</td><td><button class="btn-del">Remove</button></td></tr>
+      <tr><td>Bob Williams</td><td>S67890</td><td><button class="btn-del">Remove</button></td></tr>
+    </table>
+  </div>
+</body>
+</html>

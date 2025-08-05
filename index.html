@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome - QR Attendance System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background: url("vignan.jpg") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .intro-box {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #4682B4;
+      animation: hideIntro 1s ease-in-out forwards;
+      animation-delay: 2s;
+      z-index: 2;
+    }
+
+    @keyframes hideIntro {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    .main {
+      opacity: 0;
+      animation: showMain 1s ease-in-out forwards;
+      animation-delay: 3s;
+    }
+
+    @keyframes showMain {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .box {
+      width: 340px;
+      padding: 40px;
+      margin: 100px auto;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      text-align: center;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      color: #000;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: #4682B4;
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .btn-stu {
+      background-color: #5cb85c;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Welcome animation screen -->
+    <div class="intro-box">Welcome to Vignan University</div>
+
+    <!-- Main content -->
+    <div class="main">
+      <div class="box">
+        <h1>Select Your Role</h1>
+        <a href="teacher-login.html" class="btn">I am a Teacher</a>
+        <a href="student-login.html" class="btn btn-stu">I am a Student</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
