@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url("vignan.jpg") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 350px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+      font-size: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .txt {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #4682B4;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #356996;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .link a {
+      color: #4682B4;
+      text-decoration: none;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+
+    #message {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 500px) {
+      .box {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+
+      .txt {
+        font-size: 13px;
+        padding: 8px;
+      }
+
+      .btn {
+        font-size: 14px;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Teacher Login</h1>
+    <form id="loginForm">
+      <label for="userid">User ID:</label>
+      <input type="text" id="userid" name="userid" class="txt" placeholder="user id is  teacher123" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" class="txt" placeholder="password is pass123" required>
+
+      <div id="message"></div>
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <p class="link">
+      <a href="index.html">← Select a different role</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const userid = document.getElementById("userid").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("message");
+
+      const demoUser = {
+        userid: "teacher123",
+        password: "pass123",
+        name: "John Smith"
+      };
+
+      if (userid === "" || password === "") {
+        message.style.color = "red";
+        message.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      if (userid === demoUser.userid && password === demoUser.password) {
+        localStorage.setItem("teacherName", demoUser.name);
+
+        message.style.color = "green";
+        message.textContent = "Login successful! Redirecting...";
+        setTimeout(() => {
+          window.location.href = "teacher-dashboard.html";
+        }, 1500);
+      } else {
+        message.style.color = "red";
+        message.textContent = "Invalid User ID or Password.";
+      }
+    });
+  </script>
+</body>
+</html>
+

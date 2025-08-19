@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Attendance History</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('vignan.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+  
+    .header {
+      background-color: rgba(51, 51, 51, 0.8);
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: clamp(16px, 4vw, 20px);
+      font-weight: bold;
+    }
+
+    .userinfo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .userinfo a {
+      color: white;
+      text-decoration: none;
+    }
+    .userinfo a:hover {
+      text-decoration: underline;
+    }
+
+
+    .maincontent {
+      width: 95%;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid #cccccc;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      flex-grow: 1;
+      overflow-x: auto; 
+    }
+
+    h1 {
+      color: #333;
+      font-size: clamp(20px, 4vw, 26px);
+      margin-bottom: 10px;
+    }
+
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: clamp(13px, 3vw, 16px);
+      min-width: 300px;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: rgba(242, 242, 242, 0.8);
+    }
+
+    .statuspresent {
+      color: green;
+      font-weight: bold;
+    }
+
+    .statusabsent {
+      color: red;
+      font-weight: bold;
+    }
+
+
+    @media (max-width: 480px) {
+      .maincontent {
+        padding: 15px;
+      }
+      th, td {
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">QR Attendance</div>
+    <div class="userinfo">
+      <span id="studentNameDisplay">Welcome, Student Name</span>
+      <a href="student-login.html" id="logoutBtn">Logout</a>
+    </div>
+  </div>
+
+  <div class="maincontent">
+    <h1>My Attendance History for CS101</h1>
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>2023-10-26</td>
+        <td class="statuspresent">Present</td>
+      </tr>
+      <tr>
+        <td>2023-10-24</td>
+        <td class="statuspresent">Present</td>
+      </tr>
+      <tr>
+        <td>2023-10-19</td>
+        <td class="statusabsent">Absent</td>
+      </tr>
+      <tr>
+        <td>2023-10-17</td>
+        <td class="statuspresent">Present</td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    alert("This is a demo page showing sample attendance data.");
+
+    const studentName = localStorage.getItem("studentName");
+
+    if (studentName) {
+      document.getElementById("studentNameDisplay").textContent = "Welcome, " + studentName;
+    } else {
+      window.location.href = "student-login.html";
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      localStorage.removeItem("studentName");
+    });
+  </script>
+</body>
+</html>

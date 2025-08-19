@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teacher Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: url('vignan.jpg') no-repeat center center/cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    .teacherdashboard {
+      width: 100%;
+      max-width: 900px;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      color: #222;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .user-info {
+      font-size: 16px;
+    }
+
+    .user-info b {
+      font-size: 18px;
+    }
+
+    .main h2 {
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    .course-list {
+      display: grid;
+      gap: 20px;
+    }
+
+    .course-card {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .course-card:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .card-info h3 {
+      margin-bottom: 5px;
+      color: #111;
+    }
+
+    .card-info p {
+      color: #444;
+    }
+
+    .card-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .card-buttons button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      white-space: nowrap;
+    }
+
+    .manage-btn {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .session-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .report-btn {
+      background-color: #6c63ff;
+      color: white;
+    }
+
+    .card-buttons button:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+
+    
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 22px;
+      }
+      .user-info {
+        font-size: 14px;
+      }
+      .user-info b {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .teacherdashboard {
+        padding: 20px;
+      }
+      .course-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .card-buttons {
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 10px;
+      }
+      .card-buttons button {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="teacherdashboard">
+    <div class="header">
+      <div class="logo">QR Attendance</div>
+      <div class="user-info">Welcome, <b id="teacherName"></b></div>
+    </div>
+
+    <div class="main">
+      <h2>Courses</h2>
+      <div class="course-list">
+
+        <div class="course-card">
+          <div class="card-info">
+            <h3>Web Development</h3>
+            <p>Students: 50</p>
+          </div>
+          <div class="card-buttons">
+            <button class="session-btn" onclick="openPage('attendance-session.html', 'Starting Attendance Session for Web Development')">Attendance Session</button>
+            <button class="report-btn" onclick="openPage('attendance-report.html', 'Opening Attendance Report for Web Development')">Attendance Report</button>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="card-info">
+            <h3>Data Structures</h3>
+            <p>Students: 42</p>
+          </div>
+          <div class="card-buttons">
+            <button class="session-btn" onclick="openPage('attendance-session.html', 'Starting Attendance Session for Data Structures')">Attendance Session</button>
+            <button class="report-btn" onclick="openPage('attendance-report.html', 'Opening Attendance Report for Data Structures')">Attendance Report</button>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="card-info">
+            <h3>AI & ML</h3>
+            <p>Students: 38</p>
+          </div>
+          <div class="card-buttons">
+            <button class="session-btn" onclick="openPage('attendance-session.html', 'Starting Attendance Session for AI & ML')">Attendance Session</button>
+            <button class="report-btn" onclick="openPage('attendance-report.html', 'Opening Attendance Report for AI & ML')">Attendance Report</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const teacherName = localStorage.getItem("teacherName") || "Teacher";
+    document.getElementById("teacherName").textContent = teacherName;
+
+    function openPage(url, message) {
+      alert(message);
+      window.location.href = url;
+    }
+  </script>
+
+</body>
+</html>
+

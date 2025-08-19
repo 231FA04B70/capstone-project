@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan QR Code</title>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('vignan.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      background-color: rgba(51, 51, 51, 0.9);
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .logoname {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .userinfo {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .userinfo a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .mainbox {
+      width: 95%;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+
+    h1 {
+      color: #222;
+      font-size: clamp(18px, 4vw, 24px);
+    }
+
+    .qrbox {
+      width: 100%;
+      max-width: 300px;
+      aspect-ratio: 1 / 1;
+      margin: 10px auto;
+      border: 5px solid #555;
+      background-color: #000;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #reader video {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover;
+    }
+
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 0, 0, 0.7);
+      box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+      animation: moveScan 2s infinite ease-in-out;
+    }
+
+    @keyframes moveScan {
+      0% {
+        top: 0;
+      }
+      50% {
+        top: calc(100% - 3px);
+      }
+      100% {
+        top: 0;
+      }
+    }
+
+    #result {
+      font-size: clamp(14px, 3vw, 18px);
+      font-weight: bold;
+      margin-top: 10px;
+      color: green;
+      word-break: break-word;
+    }
+
+    p {
+      font-size: clamp(14px, 3vw, 16px);
+    }
+
+
+    @media (min-width: 768px) {
+      .mainbox {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="logoname">QR Attendance</div>
+    <div class="userinfo">
+      <span id="studentNameDisplay">Welcome, Student</span>
+      <a href="student-login.html" id="logoutBtn">Logout</a>
+    </div>
+  </div>
+
+  <div class="mainbox">
+    <h1>Scan Attendance QR Code</h1>
+    <div id="reader" class="qrbox">
+      <div class="scan-line"></div>
+    </div>
+    <p>Point your camera at the QR code displayed by the teacher.</p>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    let html5QrCode;
+
+    const studentName = localStorage.getItem("studentName");
+    if (studentName) {
+      document.getElementById("studentNameDisplay").textContent = "Welcome, " + studentName;
+    } else {
+      window.location.href = "student-login.html";
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      localStorage.removeItem("studentName");
+    });
+
+    function startQrCodeScanner() {
+      html5QrCode = new Html5Qrcode("reader");
+      const config = {
+        fps: 10,
+        qrbox: { width: 250, height: 250 },
+        facingMode: "environment"
+      };
+
+      html5QrCode.start(
+        { facingMode: "environment" },
+        config,
+        (decodedText) => {
+          document.getElementById("result").innerHTML = "✅ QR Code: " + decodedText;
+          html5QrCode.stop();
+        },
+        () => { }
+      ).catch(err => {
+        console.error("Camera start failed", err);
+        document.getElementById("result").innerHTML =
+          "❌ Error starting QR code scanner. Please make sure you have a camera and have granted permission.";
+      });
+    }
+
+    window.addEventListener('load', startQrCodeScanner);
+  </script>
+</body>
+
+</html>

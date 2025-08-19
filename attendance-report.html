@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Reports</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('vignan.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .hdr {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hdr a {
+      color: white;
+      text-decoration: none;
+      margin-left: 5px;
+    }
+
+  
+    .box {
+      width: 90%;
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 25px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #000;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      color: #222;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+ 
+    .flt {
+      background-color: rgba(255, 255, 255, 0.3);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flt label {
+      font-weight: bold;
+    }
+
+    .flt select, .flt input, .flt button {
+      padding: 7px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .flt button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .flt button:hover {
+      background-color: #0056b3;
+    }
+
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 10px;
+      }
+
+      td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+      }
+
+      td::before {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      td:nth-of-type(1)::before { content: "Student Name"; }
+      td:nth-of-type(2)::before { content: "Date"; }
+      td:nth-of-type(3)::before { content: "Status"; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hdr">
+    <div class="logo">QR Attendance</div>
+    <div class="info"><span>Welcome, Teacher Name</span><a href="teacher-login.html">Logout</a></div>
+  </div>
+
+  <div class="box">
+    <h1>Attendance Reports</h1>
+    <div class="flt">
+      <label for="course">Course:</label>
+      <select id="course">
+        <option value="CS101">CS101</option>
+        <option value="MTH231">MTH231</option>
+      </select>
+      <label for="date">Date:</label>
+      <input type="date" id="date">
+      <button onclick="generateReport()">Generate Report</button>
+    </div>
+
+    <table id="attendanceTable">
+      <thead>
+        <tr><th>Student Name</th><th>Date</th><th>Status</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const attendanceData = [
+      { course: "CS101", studentName: "Alice Johnson", date: "2023-10-26", status: "Present" },
+      { course: "CS101", studentName: "Bob Williams", date: "2023-10-26", status: "Present" },
+      { course: "CS101", studentName: "Charlie Brown", date: "2023-10-26", status: "Absent" },
+      { course: "MTH231", studentName: "Alice Johnson", date: "2023-10-26", status: "Present" },
+      { course: "MTH231", studentName: "David Miller", date: "2023-10-26", status: "Absent" },
+      { course: "CS101", studentName: "Eve Davis", date: "2023-10-27", status: "Present" },
+      { course: "CS101", studentName: "Bob Williams", date: "2023-10-27", status: "Absent" }
+    ];
+
+    function generateReport() {
+      const course = document.getElementById("course").value;
+      const date = document.getElementById("date").value;
+      const tableBody = document.querySelector("#attendanceTable tbody");
+      tableBody.innerHTML = "";
+
+      const filteredData = attendanceData.filter(entry => entry.course === course && entry.date === date);
+
+      filteredData.forEach(entry => {
+        const row = tableBody.insertRow();
+        row.insertCell().textContent = entry.studentName;
+        row.insertCell().textContent = entry.date;
+        row.insertCell().textContent = entry.status;
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById("date").value = today;
+      generateReport();
+    });
+  </script>
+</body>
+</html>

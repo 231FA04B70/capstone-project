@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Attendance Session</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url("vignan.jpg") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+    }
+
+
+    .hdr {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .logo {
+      font-size: clamp(16px, 3vw, 20px);
+      font-weight: bold;
+    }
+
+    .info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      font-size: clamp(14px, 2.5vw, 16px);
+    }
+
+    .hdr a {
+      color: white;
+      text-decoration: none;
+      background: rgba(255,255,255,0.1);
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+
+  
+    .box {
+      width: 90%;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      color: #000;
+    }
+
+    .sess {
+      text-align: center;
+    }
+
+    h1, h2 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: clamp(18px, 4vw, 24px);
+    }
+
+
+    .qr-box {
+      width: clamp(180px, 40vw, 250px);
+      height: clamp(180px, 40vw, 250px);
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 2px dashed #ccc;
+      margin: 20px auto;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .qr-code-image {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    
+    .btn {
+      padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px);
+      font-size: clamp(14px, 3vw, 16px);
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      overflow: hidden;
+      min-width: 400px;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      font-size: clamp(12px, 2.5vw, 14px);
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .yes {
+      color: green;
+      font-weight: bold;
+    }
+
+    .wait {
+      color: #888;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo">QR Attendance</div>
+  <div class="info">
+    <span>Welcome, Teacher Name</span>
+    <a href="teacher-login.html">Logout</a>
+  </div>
+</div>
+
+<div class="box">
+  <div class="sess">
+    <h1>Live Attendance for CS101</h1>
+    <button class="btn" onclick="generateQRCode()">Generate QR Code</button>
+    <div class="qr-box">
+      <img id="qrCodeImage" src="" alt="QR Code" class="qr-code-image hidden">
+      <p id="qrCodePlaceholder">QR Code will appear here</p>
+    </div>
+  </div>
+
+  <h2>Live Attendance List</h2>
+  <div class="table-wrapper">
+    <table>
+      <tr>
+        <th>Student Name</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>Alice Johnson</td>
+        <td class="yes">Present</td>
+      </tr>
+      <tr>
+        <td>Bob Williams</td>
+        <td class="yes">Present</td>
+      </tr>
+      <tr>
+        <td>Charlie Brown</td>
+        <td class="wait">Awaiting Scan</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<script>
+  let qrCodeTimeout;
+
+  function generateQRCode() {
+    const qrCodeImage = document.getElementById("qrCodeImage");
+    const qrCodePlaceholder = document.getElementById("qrCodePlaceholder");
+
+    clearTimeout(qrCodeTimeout);
+
+    qrCodeImage.classList.add("hidden");
+    qrCodePlaceholder.style.display = "block";
+    qrCodePlaceholder.textContent = "Generating QR Code...";
+
+    const qrCodeContent = new Date().getTime().toString();
+    const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(qrCodeContent)}`;
+
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        qrCodeImage.src = apiUrl;
+        qrCodePlaceholder.style.display = "none";
+        qrCodeImage.classList.remove("hidden");
+
+        qrCodeTimeout = setTimeout(() => {
+          qrCodeImage.classList.add("hidden");
+          qrCodeImage.src = "";
+          qrCodePlaceholder.style.display = "block";
+          qrCodePlaceholder.textContent = "QR Code will appear here";
+          alert("QR Code has been hidden.");
+        }, 5000);
+      })
+      .catch(error => {
+        console.error("Error generating QR code:", error);
+        qrCodePlaceholder.textContent = "Error generating QR code.";
+      });
+  }
+</script>
+</body>
+</html>
